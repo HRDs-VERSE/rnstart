@@ -12,8 +12,18 @@ const port = process.env.PORT || 3000;
 // Connect to MongoDB
 connectDB();
 
+// CORS configuration
+const corsOptions = {
+  origin: process.env.NODE_ENV === 'production' 
+    ? process.env.FRONTEND_URL || 'https://your-frontend-domain.vercel.app'
+    : '*',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(json());
 
 // Public routes
